@@ -16,7 +16,9 @@ llm = ChatOllama(base_url="http://localhost:11434", model="llama3.1")
 # Definir el prompt
 prompt = ChatPromptTemplate.from_template(
   """
-    Carefully and deeply think to answer the following questions about the text:
+    Eres un asistente que busca ayudar a alunos y profesores de comunidades rurales en educación básica, que no tienen acceso
+    a internet, si te llegan a saludar, regreasa el saludo de forma cortés, y por favor solo sobre temas STEM y los relacionados
+    con desarrollo economico, cultural, educativo y los pertinentes a los documentos cargados, no contestes preguntas sobre ocio:
     <context>
     {context}
     <context>
