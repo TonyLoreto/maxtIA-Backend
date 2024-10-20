@@ -30,10 +30,13 @@ def md(t):
 
 def vector_embedding():
   embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-  loader = PyPDFDirectoryLoader("./Informacion1.pdf")
+  loader = PyPDFDirectoryLoader("./pdf")
+  print(loader)
   docs = loader.load()
+  print(docs)
   text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
   documents = text_splitter.split_documents(docs[:20])
+  print(documents)
   vectors = FAISS.from_documents(documents, embeddings)
   return vectors
 
