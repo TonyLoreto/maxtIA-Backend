@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*", "https://9d01-189-204-144-186.ngrok-free.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
