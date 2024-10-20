@@ -17,6 +17,7 @@ Este servicio corre en el puerto `8000` y se ejecuta utilizando el siguiente com
 
 ```bash
 python api.py
+```
 
 El backend del proyecto esté compuesto por los siguientes 3 archivos principales:
 
@@ -35,4 +36,3 @@ Este archivo contiene una función que permite generar los **RAGs** a partir de 
 ### 3. `models.py`
 
 Este archivo contiene el funcionamiento que permite realizar las consultas al modelo previa carga de pdf que ayudarán a realizar la consulta personalizada.
-
