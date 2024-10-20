@@ -1,0 +1,9 @@
+langchain 
+langchain-community 
+langchain-groq 
+pypdf 
+langchain-huggingface 
+faiss-gpu
+ipython
+fastapi 
+uvicorn
