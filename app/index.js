@@ -34,5 +34,5 @@ document.getElementById("submit-query").addEventListener("click", async () => {
 
 document.getElementById("clear-screen").addEventListener("click", () => {
     document.getElementById("query-input").value = "";  
-    document.getElementById("response-textarea").value = "Hola, soy MaxtIA y estoy aquí para apoyarte con tu ruta de aprendizaje, puedes decirme ¿qué es lo primero que quieres aprender hoy?";  
+    document.getElementById("response-textarea").value = "";  
 });
