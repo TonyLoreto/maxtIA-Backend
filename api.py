@@ -16,7 +16,7 @@ load_dotenv()
 app = FastAPI()
 
 # Inicializar el modelo de Ollama
-llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2:1b")
+llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2")
 
 # Definir el prompt
 prompt = ChatPromptTemplate.from_template(
