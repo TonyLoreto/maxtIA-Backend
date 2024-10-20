@@ -1,8 +1,8 @@
 # MaxtIA
 
-**MaxtIA** es una solución offline que, utilizando **RAGs** (Retrieval-Augmented Generation) y un servidor local, permite realizar consultas personalizadas de forma eficiente.
+**MaxtIA** es una soluci√≥n offline que, utilizando **RAGs** (Retrieval-Augmented Generation) y un servidor local, permite realizar consultas personalizadas de forma eficiente.
 
-## Instalación de Ollama
+## Instalaci√≥n de Ollama
 
 Para utilizar MaxtIA, es necesario instalar Ollama localmente. Sigue estos pasos:
 
