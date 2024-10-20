@@ -1,13 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
-from langchain_ollama import ChatOllama
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.chains import create_retrieval_chain
-from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
 from dotenv import load_dotenv
 import os
+from models import load_vectors_and_query
+from generator import vector_embedding
 
 # Cargar variables de entorno
 load_dotenv()
@@ -15,48 +11,42 @@ load_dotenv()
 # Inicializar FastAPI
 app = FastAPI()
 
-# Inicializar el modelo de Ollama
-llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2")
-
-# Definir el prompt
-prompt = ChatPromptTemplate.from_template(
-    """
-    Carefully and deeply think to answer the following questions about the text:
-    <context>
-    {context}
-    <context>
-    Questions: {input}
-    """
-)
-
 # Clase para la estructura de la solicitud
 class QueryRequest(BaseModel):
     query: str
-
-# Cargar embeddings y FAISS index
-def load_vectors():
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-    vectors = FAISS.load_local("./faiss_index", embeddings, allow_dangerous_deserialization=True)
-    return vectors
-
-# Inicializar FAISS index y el retriever
-vectors = load_vectors()
 
 # Definir el endpoint para realizar consultas
 @app.post("/query")
 async def query_model(request: QueryRequest):
     try:
-        # Crear la cadena de recuperación
-        retriever = vectors.as_retriever()
-        document_chain = create_stuff_documents_chain(llm, prompt)
-        retrieval_chain = create_retrieval_chain(retriever, document_chain)
+        response = load_vectors_and_query(request.query)
+        return {"answer": response}
 
-        # Ejecutar la consulta
-        response = retrieval_chain.invoke({'input': request.query})
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-        # Devolver la respuesta generada
-        return {"answer": response['answer']}
+# Endpoint para generar los vectores FAISS
+@app.post("/generate")
+async def generate_vectors():
+    try:
+        vector_embedding()
+        return {"message": "Vectores generados exitosamente."}
 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint para subir archivos PDF
+@app.post("/upload")
+async def upload_pdf(file: UploadFile = File(...)):
+    try:
+        file_location = f"./pdf/{file.filename}"
+        
+        # Guardar el archivo subido
+        with open(file_location, "wb+") as file_object:
+            file_object.write(file.file.read())
+        
+        return {"info": f"Archivo {file.filename} guardado exitosamente."}
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
