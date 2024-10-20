@@ -1,8 +1,3 @@
-window.onload = () => {
-    const responseTextarea = document.getElementById("response-textarea");
-    responseTextarea.value = "Hola, soy MaxtIA y estoy aquí para apoyarte con tu ruta de aprendizaje, puedes decirme ¿qué es lo primero que quieres aprender hoy?";
-};
-
 document.getElementById("submit-query").addEventListener("click", async () => {
     const query = document.getElementById("query-input").value;
     const responseTextarea = document.getElementById("response-textarea");
